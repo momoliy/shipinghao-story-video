@@ -86,7 +86,7 @@ Each stage has five fields:
 
 **Enter when:** VOICE is confirmed.
 
-**Skill acts:** use actual narration duration and timestamps to calculate image cadence and create `STORYBOARD.csv`. Each row includes shot ID, audio start/end, narration excerpt, visual intent, characters, text-card need, and status.
+**Skill acts:** use actual narration duration and timestamps to calculate image cadence and create `STORYBOARD.csv`. Each row includes shot ID, chapter, audio start/end, narration excerpt, visual intent, characters, text-card need, planned motion (`push_in`, `pull_out`, `pan_left`, `pan_right`, `pan_up`, `pan_down`, or `hold`), incoming transition, and status. Plan motion with the rules in [motion and effects](motion-and-effects.md).
 
 **Ask now:** present two concrete cadence options with real counts. Recommended default for a first audio-first project is 10–12 seconds per image; offer 6–8 seconds when the user wants faster visual motion and accepts more images.
 
@@ -98,13 +98,13 @@ Each stage has five fields:
 
 **Enter when:** STORYBOARD is confirmed.
 
-**Skill acts:** request one to three reference images or propose two to three directions derived from the brief and benchmarks. Extract stable style variables: medium, palette, line/texture, lighting, composition, aspect ratio, negative constraints, subtitle style, and text-card style. Produce three to five pilot prompts or images.
+**Skill acts:** request one to three reference images or propose two to three directions derived from the brief and benchmarks. Extract stable style variables: medium, palette, line/texture, lighting, composition, aspect ratio, negative constraints, subtitle style, and text-card style. Produce three to five pilot prompts or images. After the image pilot is chosen, read [motion and effects](motion-and-effects.md), propose the `steady` preset by default (or `lively` when the brief targets a younger audience), and assemble a 10–15 second motion pilot from the pilot images showing image moves, both transition types, subtitles, and one text card.
 
-**Ask now:** ask the user to choose or reject the pilot. Ask one targeted follow-up about the largest visible problem when rejected.
+**Ask now:** first ask the user to choose or reject the image pilot. Then ask the user to accept the motion pilot or name the single biggest problem (too fast, too slow, subtitles too small, transitions too flashy). Ask one targeted follow-up about the largest visible problem when rejected.
 
-**Deliver:** `VISUAL_STYLE.md`, chosen pilot images, and frozen text treatment.
+**Deliver:** `VISUAL_STYLE.md`, chosen pilot images, frozen text treatment, the motion pilot video, and `MOTION_STYLE.md` using `assets/motion-style-template.md`.
 
-**Gate:** user explicitly confirms image style and text treatment. Do not write the full image prompt manifest before this.
+**Gate:** user explicitly confirms image style, text treatment, and the motion pilot. Do not write the full image prompt manifest before this. Later motion changes return here as `需要返工`.
 
 ## CHARACTER_ANCHORS
 
@@ -122,7 +122,7 @@ Each stage has five fields:
 
 **Enter when:** VISUAL_STYLE and any required CHARACTER_ANCHORS are confirmed.
 
-**Skill acts:** create `IMAGE_PROMPTS.md` mapped one-to-one to storyboard IDs. Each prompt carries reference rules, identity constraints, frozen style, specific scene, composition, output format, and negative constraints. Start with a three-to-five-shot pilot manifest.
+**Skill acts:** create `IMAGE_PROMPTS.md` mapped one-to-one to storyboard IDs. Each prompt carries reference rules, identity constraints, frozen style, specific scene, composition, output format, and negative constraints. Compose for the planned motion: keep the main subject and faces away from frame edges and out of the subtitle zone, and leave room for the shot's push or pan. Start with a three-to-five-shot pilot manifest.
 
 **Ask now:** tell the user exactly which pilot prompts to run, where to run them, how to name results, and what to return for review.
 
@@ -170,11 +170,11 @@ Each stage has five fields:
 
 **Enter when:** images are confirmed and music is confirmed or skipped.
 
-**Skill acts:** assemble the project, preferably with HyperFrames when available. In a host with the bundled HyperFrames skills, load the `hyperframes` mandatory entry point before touching the composition and follow its routing instructions. Align images, subtitles, text cards, and music to narration timestamps. Run structural checks and create a reviewable preview. Do not final-render yet.
+**Skill acts:** assemble the project, preferably with HyperFrames when available. In a host with the bundled HyperFrames skills, load the `hyperframes` mandatory entry point before touching the composition and follow its routing instructions. Align images, subtitles, text cards, and music to narration timestamps. Apply `MOTION_STYLE.md` and each storyboard row's motion and transition exactly, following [motion and effects](motion-and-effects.md); do not improvise new effects. Run structural checks and the motion checks, then create a reviewable preview. Do not final-render yet.
 
-**Ask now:** tell the user what to review: opening minute, chapter transitions, character first appearances, text/subtitle collisions, and ending. Ask for specific changes or approval.
+**Ask now:** tell the user what to review: opening minute and hook, motion speed, chapter transitions, character first appearances, subtitle readability, text/subtitle collisions, and ending. Ask for specific changes or approval.
 
-**Deliver:** preview, review board or representative frames, and issue list.
+**Deliver:** preview, review board or representative frames, `review/motion-qc.md`, and issue list.
 
 **Gate:** user approves preview. A general earlier “go ahead” is not sufficient.
 

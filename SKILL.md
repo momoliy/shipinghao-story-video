@@ -41,7 +41,7 @@ Hard gates:
 
 - Do not generate a writing pack before product direction and benchmark roles are confirmed.
 - Do not synthesize full narration before the final script is confirmed.
-- Do not write the complete image-prompt manifest before image cadence and visual style are confirmed.
+- Do not write the complete image-prompt manifest before image cadence, visual style, and the motion pilot are confirmed.
 - Do not batch-generate images before a three-to-five-image pilot and any required character anchors are confirmed.
 - Do not render a final video before the user accepts the preview.
 - Do not publish, upload, post, or change a live channel unless the user separately authorizes that action.
@@ -72,6 +72,13 @@ If a gate fails, mark `需要返工`, return only to the earliest affected stage
 - In manual mode, guide a pilot first, then batches. Do not dump dozens of prompts in the first image turn.
 - Keep prompt IDs, storyboard IDs, generated filenames, and narration ranges aligned.
 
+### Motion and effects
+
+- Read [references/motion-and-effects.md](references/motion-and-effects.md) at STORYBOARD, VISUAL_STYLE, and PREVIEW.
+- Motion is locked once in VISUAL_STYLE as `MOTION_STYLE.md` with a 10–15 second motion pilot; assembly applies it and never improvises new effects.
+- Default to the `steady` preset (slow small moves, crossfade and fade-through-black only, large high-contrast subtitles) for history and story content for middle-aged and older viewers; use `lively` only when the brief or user asks.
+- Every storyboard row carries one planned motion and an incoming transition. Faces never leave the frame or sit under subtitles.
+
 ### Assembly and review
 
 - Prefer HyperFrames for programmable assembly when available, but follow the confirmed project format and host capability.
@@ -98,6 +105,7 @@ Use stable filenames so the project can resume across hosts:
 - `audio/`
 - `STORYBOARD.csv`
 - `VISUAL_STYLE.md`
+- `MOTION_STYLE.md`
 - `characters/`
 - `IMAGE_PROMPTS.md`
 - `images/`

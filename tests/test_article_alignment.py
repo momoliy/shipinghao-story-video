@@ -152,6 +152,25 @@ class ArticleAlignmentTests(unittest.TestCase):
         self.assertIn("Doubao", self.skill)
         self.assertTrue((ROOT / "references" / "doubao-tts.md").is_file())
 
+    def test_motion_is_locked_in_visual_style_and_applied_in_preview(self) -> None:
+        self.assertTrue((ROOT / "references" / "motion-and-effects.md").is_file())
+        self.assertTrue((ROOT / "assets" / "motion-style-template.md").is_file())
+        self.assertIn("MOTION_STYLE.md", self.skill)
+
+        def section(name: str, nxt: str) -> str:
+            return self.workflow[self.workflow.index(f"## {name}"):self.workflow.index(f"## {nxt}")]
+
+        visual = section("VISUAL_STYLE", "CHARACTER_ANCHORS")
+        self.assertIn("motion pilot", visual)
+        self.assertIn("MOTION_STYLE.md", visual)
+        preview = section("PREVIEW", "FINAL_RENDER")
+        self.assertIn("MOTION_STYLE.md", preview)
+        self.assertIn("motion-qc.md", preview)
+
+        header = (ROOT / "assets" / "storyboard-template.csv").read_text(encoding="utf-8").splitlines()[0]
+        for column in ("motion", "transition_in", "chapter"):
+            self.assertIn(column, header.split(","))
+
     def test_state_cli_initializes_and_validates(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             project = Path(temp_dir) / "sample"
