@@ -74,11 +74,11 @@ Each stage has five fields:
 
 **Enter when:** SCRIPT is confirmed.
 
-**Skill acts:** check whether a chosen TTS service is locally configured. If access is missing, guide the user through the current official application and local configuration path, verifying the official instructions when they may have changed; never request the plaintext key. For the established Doubao path, use current Seed-TTS 2.0 rather than a legacy generation. Select a representative approximately twenty-second sample and generate five to ten same-text voice auditions. After voice selection, generate a small set of rate auditions.
+**Skill acts:** use Doubao (豆包) Seed-TTS 2.0 as the only TTS provider; read [Doubao TTS](doubao-tts.md). Check whether Doubao credentials are locally configured. If access is missing, guide the user through the current official application in the Volcengine console and the local configuration path, verifying the official instructions when they may have changed; never request the plaintext key. Use current Seed-TTS 2.0 rather than a legacy generation. Never substitute another TTS service. Select a representative approximately twenty-second sample and generate five to ten same-text Doubao voice auditions. After voice selection, generate a small set of rate auditions.
 
-**Ask now:** first ask whether access is configured, without requesting plaintext credentials. Then ask the user to choose the best voice; only after that ask for rate preference.
+**Ask now:** first ask whether Doubao access is configured, without requesting plaintext credentials. Then ask the user to choose the best voice; only after that ask for rate preference.
 
-**Deliver:** voice audition set, confirmed voice/rate record, final narration, and sentence- or word-level timestamps when available.
+**Deliver:** Doubao voice audition set, confirmed Doubao voice ID and rate record, final narration, and sentence- or word-level timestamps when available.
 
 **Gate:** user confirms voice and full narration. Do not treat model or parameter suggestions as acceptance.
 

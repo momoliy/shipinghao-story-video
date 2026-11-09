@@ -10,7 +10,7 @@ At START, determine whether the host can currently:
 - package and open attachments;
 - route to the requested writing model;
 - use a logged-in browser within the authorized boundary;
-- call the configured TTS service without exposing secrets;
+- call Doubao (豆包) Seed-TTS 2.0 without exposing secrets (no other TTS provider is used);
 - generate or inspect images;
 - run HyperFrames or another confirmed assembly tool;
 - render a local video.

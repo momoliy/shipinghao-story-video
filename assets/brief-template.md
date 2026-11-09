@@ -14,6 +14,7 @@
 - Aspect ratio:
 - Target duration:
 - Narrator count:
+- Voice: Doubao (豆包) Seed-TTS 2.0 (fixed)
 - Desired cadence:
 
 ## Scope

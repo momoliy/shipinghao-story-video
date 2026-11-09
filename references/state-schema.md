@@ -17,6 +17,7 @@
       "model_routing": false,
       "logged_in_browser": false,
       "tts": false,
+      "doubao_tts": false,
       "image_generation": false,
       "hyperframes": false,
       "render": false
@@ -33,6 +34,10 @@
   "updated_at": "ISO-8601 timestamp"
 }
 ```
+
+## Fixed decision
+
+`decisions.tts_provider` is initialized to `doubao` with `status` `已确认`. Narration must come from Doubao Seed-TTS 2.0; the value is not changed to another provider.
 
 ## Allowed stages
 

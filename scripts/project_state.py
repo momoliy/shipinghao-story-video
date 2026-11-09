@@ -121,6 +121,12 @@ def validate_state(data: dict, path: Path | None = None) -> list[str]:
     else:
         errors.append("project_root must be a string")
 
+    decisions = data.get("decisions")
+    if isinstance(decisions, dict) and "tts_provider" in decisions:
+        provider = decisions["tts_provider"]
+        if not isinstance(provider, dict) or provider.get("value") != "doubao":
+            errors.append("decisions.tts_provider must be doubao")
+
     return errors
 
 
@@ -141,6 +147,7 @@ def command_init(args: argparse.Namespace) -> int:
         "model_routing": False,
         "logged_in_browser": False,
         "tts": False,
+        "doubao_tts": False,
         "image_generation": False,
         "hyperframes": False,
         "render": False,
@@ -155,7 +162,9 @@ def command_init(args: argparse.Namespace) -> int:
         "stage_status": "进行中",
         "pending_request": "Confirm the project root and whether this is new or resumed work.",
         "next_stage": "BRIEF",
-        "decisions": {},
+        "decisions": {
+            "tts_provider": {"value": "doubao", "source": "skill", "status": "已确认"}
+        },
         "artifacts": {},
         "stage_history": [],
         "created_at": timestamp,

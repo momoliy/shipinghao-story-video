@@ -82,7 +82,7 @@ class ArticleAlignmentTests(unittest.TestCase):
         self.assertTrue(description.startswith("Use when "), description)
 
         openai_yaml = OPENAI_YAML.read_text(encoding="utf-8")
-        self.assertIn("$image-story-video-wizard", openai_yaml)
+        self.assertIn("$doubao-story-video", openai_yaml)
         self.assertIn("主动分步引导", openai_yaml)
 
     def test_readme_has_one_message_install_route(self) -> None:
@@ -90,7 +90,7 @@ class ArticleAlignmentTests(unittest.TestCase):
         self.assertIn("一句话安装", readme)
         self.assertIn("skill-installer", readme)
         self.assertIn(
-            "https://github.com/aaronyi97/image-story-video-wizard", readme
+            "https://github.com/【你的GitHub用户名】/doubao-story-video", readme
         )
         self.assertIn("仓库根目录", readme)
 
@@ -143,6 +143,15 @@ class ArticleAlignmentTests(unittest.TestCase):
         self.assertIn("carefully confirm", section)
         self.assertNotIn("never make finding links or examples the user's homework", section)
 
+    def test_voice_is_doubao_only(self) -> None:
+        start = self.workflow.index("## VOICE")
+        end = self.workflow.index("## STORYBOARD")
+        section = self.workflow[start:end]
+        self.assertIn("only TTS provider", section)
+        self.assertIn("Never substitute another TTS service", section)
+        self.assertIn("Doubao", self.skill)
+        self.assertTrue((ROOT / "references" / "doubao-tts.md").is_file())
+
     def test_state_cli_initializes_and_validates(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             project = Path(temp_dir) / "sample"
@@ -166,6 +175,7 @@ class ArticleAlignmentTests(unittest.TestCase):
             state = json.loads(state_file.read_text(encoding="utf-8"))
             self.assertEqual("START", state["current_stage"])
             self.assertEqual("BRIEF", state["next_stage"])
+            self.assertEqual("doubao", state["decisions"]["tts_provider"]["value"])
 
             validate = subprocess.run(
                 [sys.executable, str(STATE_SCRIPT), "validate", str(state_file)],

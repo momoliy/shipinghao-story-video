@@ -1,9 +1,11 @@
 ---
-name: image-story-video-wizard
-description: Use when a user wants step-by-step help making an audio-first image-story, AI narration, slideshow, illustrated story, AI 讲书, 图片联播, 有声故事, or 静态图叙事视频 with Codex or WorkBuddy; not for a standalone script, single image, or ordinary video editing.
+name: doubao-story-video
+description: Use when a user wants step-by-step help making an audio-first image-story, AI narration voiced with Doubao (豆包) TTS, slideshow, illustrated story, AI 讲书, 图片联播, 有声故事, or 静态图叙事视频 with Codex or WorkBuddy; not for a standalone script, single image, or ordinary video editing.
 ---
 
-# Image Story Video Wizard
+# Doubao Story Video
+
+All narration in this Skill is produced with Doubao (豆包) Seed-TTS 2.0 on Volcengine. No other TTS provider is offered or substituted.
 
 Own the process. The user supplies the current decision or material; the Skill decides what must happen next, explains it, performs everything it can, and stops at the next confirmation gate.
 
@@ -57,9 +59,10 @@ If a gate fails, mark `需要返工`, return only to the earliest affected stage
 
 ### Voice
 
-- Ask whether TTS credentials are locally configured; never ask the user to paste a secret into chat. If absent, guide local secret storage and verify only availability.
-- Compare five to ten voices with the same approximately twenty-second sample. Confirm voice first, then test speaking rate.
-- Prefer narration output with sentence- or word-level timestamps when available.
+- The only TTS provider is Doubao (豆包) Seed-TTS 2.0 on Volcengine. Do not offer, suggest, or silently fall back to any other TTS service, a host's built-in voice, or recorded placeholders. If Doubao is unavailable, mark VOICE `待确认`, guide the user through Doubao access, and wait.
+- Ask whether Doubao credentials are locally configured (`DOUBAO_TTS_APP_ID` and `DOUBAO_TTS_ACCESS_TOKEN` in the project's `.env` or the shell environment); never ask the user to paste a secret into chat. If absent, guide application in the Volcengine console and local storage, then verify only availability. Read [references/doubao-tts.md](references/doubao-tts.md) before any Doubao call.
+- Compare five to ten Doubao voices with the same approximately twenty-second sample. Confirm voice first, then test speaking rate.
+- Request sentence- or word-level timestamps from Doubao when the current API offers them; otherwise derive timing from the audio and say so.
 
 ### Storyboard and images
 
